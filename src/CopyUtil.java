@@ -6,7 +6,18 @@ import java.util.Map.Entry;
 
 public class CopyUtil {
     // StackOverFlow protection
-    private static final Map<Object, Object> copyObject = new HashMap<>();
+    private static final Map<Object, Object> copyObject = new IdentityHashMap<>();
+
+    public static void main(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        List<Object> list = new ArrayList<>();
+        List<Object> list2 = new ArrayList<>();
+        list.add(new Object());
+        list.add(list2);
+        list2.add(list);
+        Man man = new Man(list);
+        Man clone = (Man) deepCopy(man);
+        clone.getList().forEach(System.out::println);
+    }
 
 
     public static Object deepCopy(Object object) throws IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -20,6 +31,7 @@ public class CopyUtil {
                     if (copyObject.containsKey(object)) { // Check for cyclic dependencies
                         result.add(copyObject.get(object));
                         copyObject.remove(object);
+                        break;
                     } else
                         result.add(deepCopy(o));
                 }
@@ -35,6 +47,7 @@ public class CopyUtil {
             for (Entry entry : ((Map<?, Object>) object).entrySet()) {
                 if (copyObject.containsKey(entry)) {
                     result.put(entry.getKey(), copyObject.get(entry));
+                    break;
                 } else
                     result.put(entry.getKey(), deepCopy(entry.getValue()));
             }
