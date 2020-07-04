@@ -8,17 +8,6 @@ public class CopyUtil {
     // StackOverFlow protection
     private static final Map<Object, Object> copyObject = new IdentityHashMap<>();
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        List<Object> list = new ArrayList<>();
-        List<Object> list2 = new ArrayList<>();
-        list.add(new Object());
-        list.add(list2);
-        list2.add(list);
-        Man man = new Man(list);
-        Man clone = (Man) deepCopy(man);
-        clone.getList().forEach(System.out::println);
-    }
-
 
     public static Object deepCopy(Object object) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Object copy = null;
