@@ -8,7 +8,6 @@ public class CopyUtil {
     // StackOverFlow protection
     private static final Map<Object, Object> copyObject = new IdentityHashMap<>();
 
-
     public static Object deepCopy(Object object) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Object copy = null;
 
@@ -85,6 +84,10 @@ public class CopyUtil {
                 return Arrays.copyOf(arr, arr.length);
             } else if (object instanceof char[]) {
                 char[] arr = (char[]) object;
+                return Arrays.copyOf(arr, arr.length);
+            }
+            else if (object instanceof boolean[]) {
+                boolean[] arr = (boolean[]) object;
                 return Arrays.copyOf(arr, arr.length);
             }
         }
